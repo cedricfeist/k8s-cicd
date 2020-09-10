@@ -17,6 +17,9 @@ steps:
      from_secret: DOCKERHUB_USERNAME
    password:
      from_secret: DOCKERHUB_PASSWORD
+   trigger:
+     branch:
+     - master
 #- name: notify
 #  image: plugins/webhook
 #  settings:
