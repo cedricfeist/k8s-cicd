@@ -1,10 +1,11 @@
 kind: pipeline
 type: kubernetes
-name: default
+name: cicd-app-pipe
 
 steps:
 - name: clean
   image: python
+  failure: ignore
   commands:
   - pytest
 - name: publish
@@ -16,3 +17,10 @@ steps:
      from_secret: DOCKERHUB_USERNAME
    password:
      from_secret: DOCKERHUB_PASSWORD
+#- name: notify
+#  image: plugins/webhook
+#  settings:
+#    urls: https://webexapis.com/v1/webhooks/incoming/$TOKEN
+#    content_type: application/json
+#    template: |
+#      {"markdown" : "**Status:**  Build {{build.number}} was {{build.status}}"}
