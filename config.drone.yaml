@@ -1,0 +1,18 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+- name: clean
+  image: python
+  commands:
+  - pytest
+- name: publish
+  image: plugins/docker
+  settings:
+   repo: cedricfe/cicd-app
+   tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
+   username:
+     from_secret: DOCKERHUB_USERNAME
+   password:
+     from_secret: DOCKERHUB_PASSWORD
